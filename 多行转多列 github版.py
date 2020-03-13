@@ -32,11 +32,11 @@ def merge_cols(Series):
     # 获取非空项
     Series=Series[Series.notna()]
     # 获取当行所有数据
-    y=Series.values
+    value=Series.values
     result=[]
     # 遍历每一组数据，用管道符分割每个数据
-    for idx in range(0,len(y),3):
-        result.append(f'{y[idx]},{y[idx+1]},{y[idx+2]}')
+    for idx in range(0,len(value),3):
+        result.append(f'{value[idx]},{value[idx+1]},{value[idx+2]}')
     # 通过#号分割每一组数据
     return ';'.join(result)
 
