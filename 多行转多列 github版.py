@@ -23,6 +23,7 @@ def get_new_columns(df):
     columns_phone=re.findall(pattern_phoone,columns_str)
     #对新的columns合并和排序
     target_columns=[]
+    # 将每一行的数据变为一个一层嵌套的列表
     for i in range(len(columns_name)):
         target_columns+=[columns_room[i],columns_name[i],columns_phone[i]]
     return target_columns
@@ -34,26 +35,21 @@ def merge_cols(Series):
     # 获取当行所有数据
     value=Series.values
     result=[]
-    # 遍历每一组数据，用管道符分割每个数据
     for idx in range(0,len(value),3):
-        result.append(f'{value[idx]},{value[idx+1]},{value[idx+2]}')
-    # 通过#号分割每一组数据
-    return ';'.join(result)
+        result.append([value[idx],value[idx+1],value[idx+2]])
+    return result
 
 def rebuild_df(df,merge_columns):
     # 获取表格头部通用信息
-    start_index=df.columns.to_list().index(merge_columns[0])
     df_new=df.iloc[:,:2]
     # 对数据进行合并
     df_new['merge']=df.loc[:,merge_columns].apply(merge_cols,axis=1)
-    # 把merger变为list形式
-    df_new['merge']=df_new['merge'].str.split(';')
     # 通过explode变成多行
     df=df_new.explode('merge')
-    # 将单组
-    df['房号']=df['merge'].str.split(',').str[0]
-    df['姓名']=df['merge'].str.split(',').str[1]
-    df['电话']=df['merge'].str.split(',').str[2]
+    # 拆分merge列的列表
+    df['房号']=df['merge'].str[0]
+    df['姓名']=df['merge'].str[1]
+    df['电话']=df['merge'].str[2]
     df.drop('merge',axis=1,inplace=True)
     return df
 # </editor-fold>
