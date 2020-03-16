@@ -6,8 +6,7 @@ CSDN主页：https://me.csdn.net/weixin_40679090
 
 **系列文章：**
 
-- pandas之多列转多行实战：正在路上
-
+- pandas之多列转多行实战：[https://blog.csdn.net/weixin_40679090/article/details/104878213](https://blog.csdn.net/weixin_40679090/article/details/104878213)
 
 
 **文件介绍：**
